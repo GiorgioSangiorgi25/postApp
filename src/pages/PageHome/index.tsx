@@ -6,18 +6,33 @@ import { useNavigate } from "react-router-dom";
 
 const Title = styled.h1({
   textAlign: "center",
-  padding: "10px",
-  fontSize: "50px",
+  fontFamily: "Georgia, serif",
+  fontSize: "70px",
+  letterSpacing: "-0.4px",
+  wordSpacing: "1.8px",
+  color: "#000000",
+  fontWeight: "700",
+  textDecoration: "none solid rgb(68, 68, 68)",
+  fontStyle: "italic",
+  fontVariant: "small-caps",
+  textTransform: "none",
 });
 const TextFavorites = styled.div({
   textAlign: "center",
-  fontSize: "18px",
+  fontFamily: "Georgia, serif",
+  fontSize: "30px",
+  letterSpacing: "-0.4px",
+  wordSpacing: "1.8px",
+  color: "#000000",
+  fontWeight: "700",
+  textDecoration: "underline solid rgb(68, 68, 68)",
+  fontStyle: "italic",
+  fontVariant: "small-caps",
+  textTransform: "capitalize",
 });
 
 const Container = styled.div({
-  display: "flex",
-  flexDirection: "column",
-
+  paddingBottom: "40px",
   padding: "50px 200px",
 });
 
@@ -27,10 +42,23 @@ const Wrapper = styled.div({
   justifyContent: "space-between",
 });
 
+const TextWrapper = styled.div({
+  display: "flex",
+  flexDirection: "column",
+  textAlign: "center",
+});
+
+const TextTitle = styled.div({
+  textAlign: "center",
+  padding: "20px",
+  fontSize: "24px",
+  fontWeight: "700px",
+});
+
 const Text = styled.div({
   textAlign: "center",
   padding: "20px",
-  fontSize: "18px",
+  fontSize: "20px",
 });
 
 const Button = styled.button({
@@ -72,13 +100,18 @@ export const PageHome = ({ favorites }: Props) => {
 
   return (
     <>
-      <Title style={{ textAlign: "center" }}>PostAPP</Title>
+      <Title style={{ textAlign: "center" }}>postApp!</Title>
       <TextFavorites>{`The number of favorites is: ${favorites}!`}</TextFavorites>
+      <div style={{ backgroundImage: "" }}></div>
       <Container>
         {posts.map((post) => (
           <>
-            <Wrapper>
-              <Text key={post.id}>{post.title}</Text>
+            <Wrapper key={post.id}>
+              <TextWrapper>
+                <TextTitle>{post.title}</TextTitle>
+                <Text>{post.body}</Text>
+              </TextWrapper>
+
               <Button onClick={() => navigate(`/detail/${post.id}`)}>
                 Detail
               </Button>

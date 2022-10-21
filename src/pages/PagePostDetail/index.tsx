@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "@emotion/styled";
 
+import iconFavorite from "../../../src/assets/icon/icon.png";
+import deleteIcon from "../../../src/assets/icon/remove.png";
+
 // #region ::: COMPONENTS
 const Title = styled.h1({
   textAlign: "center",
@@ -9,22 +12,24 @@ const Title = styled.h1({
   fontSize: "50px",
 });
 const Container = styled.div({
+  margin: "auto",
   display: "flex",
   flexDirection: "column",
   alignItems: "baseline",
   padding: "50px 150px",
+  width: "950px",
 });
 
 const Wrapper = styled.div({
   display: "flex",
-  justifyContent: "space-around",
   alignItems: "center",
+  justifyContent: "space-between",
 });
 
 const Text = styled.div({
   textAlign: "center",
   padding: "30px",
-  fontSize: "16px",
+  fontSize: "18px",
 });
 
 const ReturnButton = styled.button({
@@ -43,22 +48,20 @@ const ReturnButton = styled.button({
 });
 
 const IconFavorite = styled.button({
-  background: "url(star.png)",
+  backgroundSize: "cover",
+  width: "70px",
+  height: "50px",
+  backgroundImage: `url(${iconFavorite})`,
+  border: "none",
+  paddingLeft: "10px",
 });
 
-const Button = styled.button({
-  boxShadow: "0px 0px 0px 2px #747474",
-  background: "linear-gradient(to bottom, #a59519 5%, #476e9e 100%)",
-  backgroundColor: "#7892c2",
-  borderRadius: "10px",
-  border: "1px solid #4e6096",
-  display: "inlineBlock",
-  cursor: "pointer",
-  color: "#ffffff",
-  fontFamily: "Arial",
-  fontSize: "16px",
-  padding: "0px 20px",
-  textDecoration: "none",
+const IconRemove = styled.button({
+  backgroundSize: "cover",
+  width: "70px",
+  height: "50px",
+  backgroundImage: `url(${deleteIcon})`,
+  border: "none",
 });
 
 //#endregion
@@ -73,11 +76,11 @@ interface TComment {
 
 interface Props {
   onAddFavorites: (id: number) => void;
+  removeFavorites: (id: number) => void;
 }
 
-export const PagePostDetail = ({ onAddFavorites }: Props) => {
+export const PagePostDetail = ({ onAddFavorites, removeFavorites }: Props) => {
   const [comments, setComments] = useState<TComment[]>([]);
-
   const { postId } = useParams();
   const navigate = useNavigate();
 
@@ -91,18 +94,23 @@ export const PagePostDetail = ({ onAddFavorites }: Props) => {
     <>
       <Title style={{ textAlign: "center" }}>Comments</Title>
       <ReturnButton onClick={() => navigate(`/`)}>Return to home</ReturnButton>
-      <Container>
-        {comments.map((comment) => (
-          <>
-            <Wrapper>
-              <Text key={comment.id}>{comment.body}</Text>
-              <Button onClick={() => onAddFavorites(comment.id)}>
-                favorites
-              </Button>
-            </Wrapper>
-          </>
-        ))}
-      </Container>
+      <>
+        <Container>
+          {comments.map((comment) => (
+            <>
+              <Wrapper>
+                <Text key={comment.id}>{comment.body}</Text>
+                <IconFavorite
+                  onClick={() => onAddFavorites(comment.id)}
+                ></IconFavorite>
+                <IconRemove
+                  onClick={() => removeFavorites(comment.id)}
+                ></IconRemove>
+              </Wrapper>
+            </>
+          ))}
+        </Container>
+      </>
     </>
   );
 };
