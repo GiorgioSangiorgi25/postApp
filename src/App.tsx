@@ -1,26 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import { Route, Routes } from "react-router-dom";
+import { PageHome } from "./pages/PageHome";
+import { PagePostDetail } from "./pages/PagePostDetail";
 
-function App() {
+const App = () => {
+  const [favorite, setFavorite] = useState<number[]>([]);
+  const onAddFavorites = (id: number) => {
+    setFavorite([...favorite, id]);
+  };
+  const favoriteLength = favorite.length;
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Routes>
+      <Route path="/" element={<PageHome favorites={favoriteLength} />} />
+      <Route
+        path="detail/:postId"
+        element={<PagePostDetail onAddFavorites={onAddFavorites} />}
+      />
+    </Routes>
   );
-}
+};
 
 export default App;
